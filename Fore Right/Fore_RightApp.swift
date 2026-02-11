@@ -5,7 +5,9 @@ import SwiftData
 struct Fore_RightApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Round.self,
+            Course.self,
+            Hole.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
