@@ -3,13 +3,13 @@ import SwiftData
 
 @Model
 final class Round {
-    var date: Date
     var course: Course
-    var numStrokesPerHole: [UInt8]
+    var date: Date
+    var numStrokesPerHole: [Int]
 
-    init(date: Date, course: Course) {
-        self.date = date
+    init(course: Course, date: Date, numStrokesPerHole: [Int] = []) {
         self.course = course
-        self.numStrokesPerHole = []
+        self.date = date
+        self.numStrokesPerHole = numStrokesPerHole
     }
 }
