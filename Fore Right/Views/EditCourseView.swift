@@ -4,6 +4,8 @@ import SwiftData
 struct EditCourseView: View {
     @Bindable var course: Course
 
+    @State private var showingSheet: Bool = false
+
     private let parOptionsRange = 3...7
 
     var body: some View {
@@ -22,6 +24,7 @@ struct EditCourseView: View {
                                 .sensoryFeedback(.increase, trigger: hole.par)
                             }
                             .padding()
+                            .padding([.leading, .trailing], 15)
                         }
                     }
                 }
@@ -36,19 +39,41 @@ struct EditCourseView: View {
                                 }
                             }
                             .padding()
+                            .padding([.leading, .trailing], 15)
                         }
                     }
                 }
             }
         }
         .navigationTitle(course.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingSheet = true
+                    print("save course")
+                } label: {
+                    Label("Save", systemImage: "checkmark")
+                }
+                .tint(.green)
+                .sheet(isPresented: $showingSheet) {
+                    VStack {
+                        Text(course.name)
+
+                        ForEach(course.holes, id: \.self) { hole in
+                            Text("Hole \(hole.number): Par \(hole.par)")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(
-        for: Course.self, Hole.self,
+        for: Course.self,
+        Hole.self,
         configurations: config
     )
 
@@ -57,7 +82,6 @@ struct EditCourseView: View {
     }
 
     let course = Course(name: "Oso Creek", holes: holes)
-    container.mainContext.insert(course)
 
     return EditCourseView(course: course)
         .modelContainer(container)
