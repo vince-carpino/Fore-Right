@@ -3,6 +3,7 @@ import SwiftUI
 struct AddCourseView: View {
     @Binding var path: [NavigationPage]
 
+    @FocusState private var isFocused: Bool
     @State private var courseName: String = ""
     @State private var numHoles: Int = 18
 
@@ -15,6 +16,7 @@ struct AddCourseView: View {
                 .padding()
                 .border(.gray)
                 .padding()
+                .focused($isFocused)
 
             HStack {
                 HStack {
@@ -37,6 +39,7 @@ struct AddCourseView: View {
                 let newCourse = Course(name: courseName, holes: newHoles)
                 NavigationManager.shared.tempCourse = newCourse
                 path.append(.editCourse)
+                isFocused = false
             } label: {
                 Text("Next")
                     .padding()
