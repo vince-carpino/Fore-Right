@@ -7,7 +7,7 @@ final class Round {
     var date: Date
     var numStrokesPerHole: [Int]
 
-    init(course: Course, date: Date, numStrokesPerHole: [Int] = []) {
+    init(course: Course = .init(), date: Date = .now, numStrokesPerHole: [Int] = []) {
         self.course = course
         self.date = date
         self.numStrokesPerHole = numStrokesPerHole
