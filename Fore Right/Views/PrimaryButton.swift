@@ -1,4 +1,3 @@
-import Foundation
 import SwiftUI
 
 struct PrimaryButton: View {
@@ -14,11 +13,12 @@ struct PrimaryButton: View {
                 .bold()
                 .font(.title)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 8))
+                .background(Color.green)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
 }
 
 #Preview {
-    PrimaryButton(label: "Test")
+    PrimaryButton(label: "Some button text")
 }
