@@ -1,26 +1,35 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingSheet: Bool = false
+    @State private var navManager: NavigationManager = .shared
 
     var body: some View {
-        Spacer()
+        NavigationStack(path: $navManager.path) {
+            VStack {
+                Spacer()
 
-        Text("Fore Right!")
-            .font(.largeTitle)
-            .bold()
-            .italic()
-            .padding()
+                Text("Fore Right!")
+                    .font(.largeTitle)
+                    .bold()
+                    .italic()
+                    .padding()
 
-        Spacer()
+                Spacer()
 
-        PrimaryButton(label: "New Round") {
-            showingSheet = true
-            print("new round")
-        }.sheet(isPresented: $showingSheet) {
-            NewRoundView()
+                PrimaryButton(label: "New Round") {
+                    navManager.path.append(NavigationPage.newRound)
+                }
+                .padding()
+            }
+            .navigationDestination(for: NavigationPage.self) { page in
+                switch page {
+                case .newRound:
+                    NewRoundView()
+                default:
+                    Text("Something went wrong...")
+                }
+            }
         }
-        .padding()
     }
 }
 
