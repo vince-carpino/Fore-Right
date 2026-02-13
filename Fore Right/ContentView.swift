@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var navManager: NavigationManager = .shared
+    @State private var path: [NavigationPage] = []
 
     var body: some View {
-        NavigationStack(path: $navManager.path) {
+        NavigationStack(path: $path) {
             VStack {
                 Spacer()
 
@@ -17,16 +17,22 @@ struct ContentView: View {
                 Spacer()
 
                 PrimaryButton(label: "New Round") {
-                    navManager.path.append(NavigationPage.newRound)
+                    path.append(.addRound)
                 }
                 .padding()
             }
             .navigationDestination(for: NavigationPage.self) { page in
                 switch page {
-                case .newRound:
-                    NewRoundView()
-                default:
-                    Text("Something went wrong...")
+                case .addRound:
+                    AddRoundView(path: $path)
+                case .addCourse:
+                    AddCourseView(path: $path)
+                case .editCourse:
+                    if let course = NavigationManager.shared.tempCourse {
+                        EditCourseView(course: course)
+                    } else {
+                        Text("No course to edit")
+                    }
                 }
             }
         }

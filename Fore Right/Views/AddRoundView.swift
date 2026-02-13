@@ -1,21 +1,19 @@
 import SwiftUI
 
-struct NewRoundView: View {
+struct AddRoundView: View {
+    @Binding var path: [NavigationPage]
+
     @State private var date: Date = Date()
-    @State private var showingSheet: Bool = false
 
     var body: some View {
         VStack {
             Text("Course")
                 .padding()
             Button {
-                print("add new course")
-                showingSheet = true
+                path.append(.addCourse)
             } label: {
                 Text("Add New Course")
                     .padding()
-            }.sheet(isPresented: $showingSheet) {
-                NewCourseView()
             }
             .border(.gray)
 
@@ -39,5 +37,5 @@ struct NewRoundView: View {
 }
 
 #Preview {
-    NewRoundView()
+    AddRoundView(path: .constant([]))
 }

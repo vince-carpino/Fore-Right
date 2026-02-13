@@ -7,4 +7,5 @@ class NavigationManager {
     private init() {}
 
     var path = NavigationPath()
+    var tempCourse: Course? = nil
 }

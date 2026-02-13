@@ -1,5 +1,5 @@
 enum NavigationPage {
-    case newRound
-    case newCourse
+    case addRound
+    case addCourse
     case editCourse
 }

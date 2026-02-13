@@ -7,41 +7,41 @@ struct EditCourseView: View {
     private let parOptionsRange = 3...7
 
     var body: some View {
-        Text(course.name)
-            .font(.largeTitle)
-            .bold()
-        Text("Par: \(course.holes.reduce(0) { $0 + $1.par })")
+        VStack {
+            Text("Par: \(course.holes.reduce(0) { $0 + $1.par })")
 
-        TabView {
-            Tab("Front", systemImage: "9.circle") {
-                VStack {
-                    ForEach($course.holes[..<9]) { $hole in
-                        HStack {
-                            Text("Hole \(hole.number)")
-                            Stepper(value: $hole.par, in: parOptionsRange) {
-                                Text("Par: \(hole.par)")
+            TabView {
+                Tab("Front", systemImage: "9.circle") {
+                    VStack {
+                        ForEach($course.holes[..<9]) { $hole in
+                            HStack {
+                                Text("Hole \(hole.number)")
+                                Stepper(value: $hole.par, in: parOptionsRange) {
+                                    Text("Par: \(hole.par)")
+                                }
+                                .sensoryFeedback(.increase, trigger: hole.par)
                             }
-                            .sensoryFeedback(.increase, trigger: hole.par)
+                            .padding()
                         }
-                        .padding()
                     }
                 }
-            }
 
-            Tab("Back", systemImage: "18.circle") {
-                VStack {
-                    ForEach($course.holes[9...]) { $hole in
-                        HStack {
-                            Text("Hole \(hole.number)")
-                            Stepper(value: $hole.par, in: parOptionsRange) {
-                                Text("Par \(hole.par)")
+                Tab("Back", systemImage: "18.circle") {
+                    VStack {
+                        ForEach($course.holes[9...]) { $hole in
+                            HStack {
+                                Text("Hole \(hole.number)")
+                                Stepper(value: $hole.par, in: parOptionsRange) {
+                                    Text("Par \(hole.par)")
+                                }
                             }
+                            .padding()
                         }
-                        .padding()
                     }
                 }
             }
         }
+        .navigationTitle(course.name)
     }
 }
 
