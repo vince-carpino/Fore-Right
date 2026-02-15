@@ -1,41 +1,68 @@
+import SwiftData
 import SwiftUI
 
 struct AddRoundView: View {
-    @Binding var path: [NavigationPage]
+    @Environment(\.modelContext) var modelContext
+    @Binding var path: NavigationPath
 
-    @State private var date: Date = Date()
+    @Query var courses: [Course]
+    @State private var selectedCourse: Course?
+
+    @State private var date: Date = .now
 
     var body: some View {
-        VStack {
-            Text("Course")
-                .padding()
-            Button {
-                path.append(.addCourse)
-            } label: {
-                Text("Add New Course")
-                    .padding()
-            }
-            .border(.gray)
+        Form {
+            Section {
+                if courses.isEmpty {
+                    Text("No saved courses")
+                        .foregroundStyle(Color.gray)
+                } else {
+                    Picker("Course", selection: $selectedCourse) {
+                        if selectedCourse == nil {
+                            Text("Select a course")
+                                .tag(nil as Course?)
+                        }
 
-            DatePicker(
-                "Date",
-                selection: $date,
-                displayedComponents: [.date]
-            )
-            .padding()
+                        ForEach(courses) { course in
+                            Text(course.name)
+                                .tag(Optional(course))
+                        }
+                    }
+                }
 
-            Button {
-                print("next")
-            } label: {
-                Text("Next")
-                    .padding()
+                Button() {
+                    let newCourse = Course()
+                    path.append(newCourse)
+                } label: {
+                    Label("Add Course", systemImage: "plus.circle")
+                }
             }
-            .border(.gray)
+
+            Section {
+                DatePicker(
+                    "Date Played",
+                    selection: $date,
+                    displayedComponents: [.date]
+                )
+            }
         }
-        .navigationTitle("New Round")
+        .navigationTitle("Add Round")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: Course.self) { course in
+            if course.name == "" && course.holes.isEmpty {
+                AddCourseView(path: $path)
+            }
+        }
     }
 }
 
 #Preview {
-    AddRoundView(path: .constant([]))
+    do {
+        let previewer = try Previewer()
+
+        return AddRoundView(path: .constant(NavigationPath()))
+            .modelContainer(previewer.container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }
