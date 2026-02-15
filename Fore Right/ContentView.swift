@@ -53,7 +53,7 @@ struct ContentView: View {
                 if round.course == nil && round.numStrokesPerHole.isEmpty {
                     AddRoundView(path: $path)
                 } else {
-                    EditRoundView(round: round, path: $path)
+                    Text("Edit Round View")
                 }
             }
             .toolbar {
