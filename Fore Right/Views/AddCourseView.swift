@@ -42,6 +42,7 @@ struct AddCourseView: View {
                             Text("Hole \(hole.number)")
                             Divider()
                             Stepper("Par \(hole.par)", value: $hole.par, in: parRange)
+                                .sensoryFeedback(.increase, trigger: hole.par)
                         }
                     }
                 }
@@ -53,6 +54,7 @@ struct AddCourseView: View {
                                 Text("Hole \(hole.number)")
                                 Divider()
                                 Stepper("Par \(hole.par)", value: $hole.par, in: parRange)
+                                    .sensoryFeedback(.increase, trigger: hole.par)
                             }
                         }
                     }
