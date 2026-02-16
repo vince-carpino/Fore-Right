@@ -59,6 +59,12 @@ struct AddCourseView: View {
                         }
                     }
                 }
+
+                Button(action: saveCourse) {
+                    Label("Save", systemImage: "checkmark.circle.fill")
+                }
+                .foregroundStyle(courseNameIsEmpty() ? .gray : .accent)
+                .disabled(courseNameIsEmpty())
             }
         }
         .onAppear {
@@ -69,16 +75,10 @@ struct AddCourseView: View {
         })
         .navigationTitle("New Course")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    saveCourse()
-                } label: {
-                    Label("Save", systemImage: "checkmark")
-                        .disabled(courseName.isEmpty)
-                }
-            }
-        }
+    }
+
+    func courseNameIsEmpty() -> Bool {
+        return courseName.isEmpty
     }
 
     func saveCourse() {
