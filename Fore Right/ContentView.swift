@@ -56,15 +56,6 @@ struct ContentView: View {
                     Text("Edit Round View")
                 }
             }
-            .toolbar {
-                if !rounds.isEmpty {
-                    Button(
-                        "Add Round",
-                        systemImage: "plus.circle",
-                        action: addRound
-                    )
-                }
-            }
         }
     }
 
