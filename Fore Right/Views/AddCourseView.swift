@@ -2,10 +2,9 @@ import SwiftData
 import SwiftUI
 
 struct AddCourseView: View {
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.modelContext) private var modelContext
     @Binding var path: NavigationPath
 
-    @FocusState private var isFocused: Bool
     @State private var courseName: String = ""
     @State private var holes: [Hole] = []
     @State private var numHoles: Int = 18
@@ -70,9 +69,9 @@ struct AddCourseView: View {
         .onAppear {
             generateHoles()
         }
-        .onChange(of: numHoles, { _, _ in
+        .onChange(of: numHoles) {
             generateHoles()
-        })
+        }
         .navigationTitle("New Course")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -89,12 +88,10 @@ struct AddCourseView: View {
 }
 
 #Preview {
-    do {
-        let previewer = try Previewer()
+    let previewer = Previewer()
 
-        return AddCourseView(path: .constant(NavigationPath()))
+    return NavigationStack {
+        AddCourseView(path: .constant(NavigationPath()))
             .modelContainer(previewer.container)
-    } catch {
-        return Text("Failed to create preview: \(error.localizedDescription)")
     }
 }
