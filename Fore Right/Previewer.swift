@@ -1,19 +1,25 @@
 import Foundation
 import SwiftData
 
-@MainActor
 struct Previewer {
     let container: ModelContainer
-    let round: Round
-    let course: Course
 
-    init() throws {
+    init(_ models: any PersistentModel.Type...) {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        container = try ModelContainer(for: Round.self, configurations: config)
+        let schema = Schema(models)
 
-        course = Course(name: "Oso Creek", holes: [])
-        round = Round(date: .now, course: course)
+        do {
+            container = try ModelContainer(for: schema, configurations: config)
+        } catch {
+            fatalError("Failed to create Preview container: \(error.localizedDescription)")
+        }
+    }
 
-//        container.mainContext.insert(round)
+    func addExamples(_ examples: [any PersistentModel]) {
+        Task { @MainActor in
+            examples.forEach { example in
+                container.mainContext.insert(example)
+            }
+        }
     }
 }
