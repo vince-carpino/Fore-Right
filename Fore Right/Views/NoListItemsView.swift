@@ -1,12 +1,12 @@
 import SwiftUI
 
-struct NoListItemsView: View {
+struct NoListItemsView<Destination: View>: View {
     var title: String = ""
     var icon: String = ""
     var description: String = ""
     var buttonText: String = ""
     var buttonIcon: String = ""
-    var buttonAction: () -> Void = { }
+    var destination: Destination
 
     var body: some View {
         ContentUnavailableView {
@@ -15,10 +15,10 @@ struct NoListItemsView: View {
         } description: {
             Text(description)
         } actions: {
-            Button(action: buttonAction) {
+            NavigationLink(destination: destination) {
                 Label(buttonText, systemImage: buttonIcon)
                     .bold()
-                    .padding(5)
+                    .padding()
             }
             .buttonStyle(.borderedProminent)
         }
@@ -32,5 +32,6 @@ struct NoListItemsView: View {
         description: "You haven't added any items yet.",
         buttonText: "Add an Item",
         buttonIcon: "plus.circle.fill",
+        destination: Text("Destination View")
     )
 }
