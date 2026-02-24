@@ -2,28 +2,36 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @State private var path = NavigationPath()
-
-    @Query(sort: [
-        SortDescriptor(\Round.date, order: .reverse)
-    ]) var rounds: [Round]
+    @State private var roundsPath = NavigationPath()
+    @State private var coursesPath = NavigationPath()
 
     var body: some View {
-        NavigationStack(path: $path) {
-            ListRoundsView(path: $path)
-//            ListCoursesView(path: $path)
+        TabView {
+            Tab("Rounds", systemImage: Round.icon) {
+                NavigationStack(path: $roundsPath) {
+                    ListRoundsView(path: $roundsPath)
+                }
+            }
+
+            Tab("Courses", systemImage: Course.icon) {
+                NavigationStack(path: $coursesPath) {
+                    ListCoursesView(path: $coursesPath)
+                }
+            }
         }
     }
 }
 
 #Preview {
-    let previewer = Previewer(Round.self)
-//    previewer.addExamples(Round.sampleRounds)
-//    previewer.addExamples(Course.sampleCourses)
+    let previewer = Previewer(
+        Round.self,
+        Course.self,
+        Hole.self
+    )
+    let courses = Course.sampleCourses
+    previewer.addExamples(courses)
+    previewer.addExamples(Round.sampleRounds(using: courses))
 
-    return NavigationStack {
-        ContentView()
-            .modelContainer(previewer.container)
-    }
+    return ContentView()
+        .modelContainer(previewer.container)
 }
