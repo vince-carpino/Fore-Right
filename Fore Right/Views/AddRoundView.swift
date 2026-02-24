@@ -2,7 +2,8 @@ import SwiftData
 import SwiftUI
 
 struct AddRoundView: View {
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
 
     @Query var courses: [Course]
     @State private var selectedCourse: Course?
@@ -52,6 +53,11 @@ struct AddRoundView: View {
                 AddCourseView(path: $path)
             }
         }
+
+    func saveRound() {
+        let round = Round(date: datePlayed, course: selectedCourse, numStrokesPerHole: strokesPerHole)
+        modelContext.insert(round)
+        dismiss()
     }
 }
 

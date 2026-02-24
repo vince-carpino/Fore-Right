@@ -3,6 +3,7 @@ import SwiftUI
 
 struct AddCourseView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
 
     @State private var courseName: String = ""
     @State private var holes: [Hole] = []
@@ -82,7 +83,7 @@ struct AddCourseView: View {
     func saveCourse() {
         let course = Course(name: courseName, holes: holes)
         modelContext.insert(course)
-        path.removeLast()
+        dismiss()
     }
 }
 
