@@ -9,17 +9,21 @@ struct ListCoursesView: View {
     var body: some View {
         List {
             ForEach(courses) { course in
-                NavigationLink(course.name) {
-                    VStack {
-                        Text("Edit Course View")
+                NavigationLink {
+                    ReadCourseView(course: course)
+                } label: {
+                    VStack(alignment: .leading) {
                         Text(course.name)
-                        ForEach(course.holes) { hole in
-                            HStack {
-                                Text("Hole \(hole.number)")
-                                Divider()
-                                Text("Par \(hole.par)")
-                            }
+                            .bold()
+
+                        HStack {
+                            Text("\(course.holes.count) Holes".uppercased())
+                                .font(.caption)
+                            Divider()
+                            Text("Par \(course.par)".uppercased())
+                                .font(.caption)
                         }
+                        .bold()
                     }
                 }
             }
@@ -34,36 +38,27 @@ struct ListCoursesView: View {
             if courses.isEmpty {
                 NoListItemsView(
                     title: "No saved courses",
-                    icon: "tree.fill",
+                    icon: "\(Course.icon).fill",
                     description: "You haven't saved any courses yet.",
                     buttonText: "Add a Course",
                     buttonIcon: "plus.circle.fill",
-                    buttonAction: addCourse,
+                    destination: AddCourseView()
                 )
             }
         }
         .toolbar {
             if !courses.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: addCourse) {
+                    NavigationLink {
+                        AddCourseView()
+                    } label: {
                         Label("Add Course", systemImage: "plus")
                     }
                 }
             }
         }
-        .navigationTitle("Courses")
-        .navigationDestination(for: Course.self) { course in
-            if course.name == "" && course.holes.isEmpty {
-                AddCourseView(path: $path)
-            } else {
-                Text("Edit Course View")
-            }
-        }
-    }
-
-    func addCourse() {
-        let newCourse = Course()
-        path.append(newCourse)
+        .navigationTitle(courses.isEmpty ? "" : "Courses")
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 

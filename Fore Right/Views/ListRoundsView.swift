@@ -11,18 +11,38 @@ struct ListRoundsView: View {
     var body: some View {
         List {
             ForEach(rounds) { round in
-                NavigationLink(value: round) {
+                NavigationLink {
+                    VStack {
+                        Text("Read Round View")
+                            .font(.headline)
+
+                        if let courseName = round.course?.name {
+                            Text(courseName)
+                            Text("on \(round.date.formatted(date: .long, time: .omitted))")
+                        }
+                    }
+                } label: {
                     VStack(alignment: .leading) {
                         if let courseName = round.course?.name {
                             Text(courseName)
+                                .font(.headline)
                         }
 
-                        Text(
-                            round.date.formatted(
-                                date: .long,
-                                time: .omitted
+                        HStack {
+                            Text(round.scoreRelativeToParFormatted)
+                            Text("•")
+                            Text("\(round.totalStrokes)")
+                            Divider()
+                            Text(
+                                round.date.formatted(
+                                    date: .abbreviated,
+                                    time: .omitted
+                                )
+                                .uppercased()
                             )
-                        )
+                        }
+                        .font(.caption)
+                        .bold()
                     }
                 }
             }
@@ -36,36 +56,27 @@ struct ListRoundsView: View {
             if rounds.isEmpty {
                 NoListItemsView(
                     title: "No rounds yet",
-                    icon: "figure.golf",
+                    icon: Round.icon,
                     description: "You haven't logged any rounds yet.",
                     buttonText: "Add a Round",
                     buttonIcon: "plus.circle.fill",
-                    buttonAction: addRound,
+                    destination: AddRoundView()
                 )
             }
         }
         .toolbar {
             if !rounds.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: addRound) {
-                        Label("Add Round", systemImage: "plus")
+                    NavigationLink {
+                        AddRoundView()
+                    } label: {
+                        Label("New Round", systemImage: "plus")
                     }
                 }
             }
         }
-        .navigationTitle("Rounds")
-        .navigationDestination(for: Round.self) { round in
-            if round.course == nil && round.numStrokesPerHole.isEmpty {
-                AddRoundView(path: $path)
-            } else {
-                Text("Edit Round View")
-            }
-        }
-    }
-
-    func addRound() {
-        let newRound = Round()
-        path.append(newRound)
+        .navigationTitle(rounds.isEmpty ? "" : "Rounds")
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 
