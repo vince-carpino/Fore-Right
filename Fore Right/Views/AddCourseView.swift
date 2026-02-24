@@ -88,7 +88,11 @@ struct AddCourseView: View {
 }
 
 #Preview {
-    let previewer = Previewer()
+    let previewer = Previewer(
+        Round.self,
+        Course.self,
+        Hole.self
+    )
 
     return NavigationStack {
         AddCourseView()

@@ -70,8 +70,14 @@ struct ListRoundsView: View {
 }
 
 #Preview {
-    let previewer = Previewer(Round.self)
-    previewer.addExamples(Round.sampleRounds)
+    let previewer = Previewer(
+        Round.self,
+        Course.self,
+        Hole.self
+    )
+    let courses = Course.sampleCourses
+    previewer.addExamples(courses)
+    previewer.addExamples(Round.sampleRounds(using: courses))
 
     return NavigationStack {
         ListRoundsView()

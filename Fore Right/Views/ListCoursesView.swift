@@ -68,7 +68,11 @@ struct ListCoursesView: View {
 }
 
 #Preview {
-    let previewer = Previewer(Course.self)
+    let previewer = Previewer(
+        Round.self,
+        Course.self,
+        Hole.self
+    )
     previewer.addExamples(Course.sampleCourses)
 
     return NavigationStack {
