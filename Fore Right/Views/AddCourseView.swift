@@ -9,8 +9,11 @@ struct AddCourseView: View {
     @State private var holes: [Hole] = []
     @State private var numHoles: Int = 18
 
-    var numHolesOptions: [Int] = [9, 18]
-    var parRange = 3...7
+    private var numHolesOptions: [Int] = [9, 18]
+    private var parRange = 3...7
+    private var par: Int {
+        holes.reduce(0) { $0 + $1.par }
+    }
 
     private func generateHoles() {
         holes = (1...numHoles).map { number in
@@ -21,40 +24,111 @@ struct AddCourseView: View {
     var body: some View {
         VStack {
             Form {
-                Section("Course - Par \(holes.reduce(0) { $0 + $1.par })".uppercased()) {
+                Section {
                     TextField("Course Name", text: $courseName)
                         .textInputAutocapitalization(.words)
 
                     HStack {
                         Picker("Holes", selection: $numHoles) {
                             ForEach(numHolesOptions, id: \.self) {
-                                Text("\($0) holes")
+                                Text("\($0) holes".uppercased())
                             }
                         }
                         .pickerStyle(.segmented)
                     }
-                }
-
-                Section("Front - Par \(holes.prefix(9).reduce(0) { $0 + $1.par })".uppercased()) {
-                    ForEach($holes[..<min(9, holes.count)]) { $hole in
-                        HStack {
-                            Text("Hole \(hole.number)")
-                            Divider()
-                            Stepper("Par \(hole.par)", value: $hole.par, in: parRange)
-                                .sensoryFeedback(.increase, trigger: hole.par)
-                        }
+                } header: {
+                    HStack {
+                        Text("Course".uppercased())
+                        Spacer()
+                        Text("Par \(par)".uppercased())
                     }
                 }
 
-                if numHoles > 9 {
-                    Section("Back - Par \(holes.dropFirst(9).reduce(0) { $0 + $1.par })".uppercased()) {
-                        ForEach($holes.dropFirst(9)) { $hole in
+                if numHoles == 18 {
+                    let frontCount = min(9, holes.count)
+                    let backStart = min(9, holes.count)
+
+                    let frontHoles = holes.prefix(frontCount)
+                    let backHoles = holes.dropFirst(backStart)
+
+                    Section {
+                        ForEach(frontHoles.indices, id: \.self) { index in
                             HStack {
-                                Text("Hole \(hole.number)")
-                                Divider()
-                                Stepper("Par \(hole.par)", value: $hole.par, in: parRange)
-                                    .sensoryFeedback(.increase, trigger: hole.par)
+                                HoleView(hole: holes[index])
+                                Stepper(
+                                    "",
+                                    value: $holes[index].par,
+                                    in: parRange
+                                )
+                                .sensoryFeedback(
+                                    .increase,
+                                    trigger: holes[index].par
+                                )
                             }
+                        }
+                    } header: {
+                        HStack {
+                            Text("Front".uppercased())
+                            Spacer()
+                            Text(
+                                "Par \(frontHoles.reduce(0) { $0 + $1.par })"
+                                    .uppercased()
+                            )
+                        }
+                    }
+
+                    Section {
+                        ForEach(backHoles.indices, id: \.self) { index in
+                            HStack {
+                                HoleView(hole: holes[index])
+                                Stepper(
+                                    "",
+                                    value: $holes[index].par,
+                                    in: parRange
+                                )
+                                .sensoryFeedback(
+                                    .increase,
+                                    trigger: holes[index].par
+                                )
+                            }
+                        }
+                    } header: {
+                        HStack {
+                            Text("Back".uppercased())
+                            Spacer()
+                            Text(
+                                "Par \(backHoles.reduce(0) { $0 + $1.par })"
+                                    .uppercased()
+                            )
+                        }
+                    }
+                } else {
+                    let holesCount = min(9, holes.count)
+                    let allHoles = holes.prefix(holesCount)
+
+                    Section {
+                        ForEach(allHoles.indices, id: \.self) { index in
+                            HStack {
+                                HoleView(hole: holes[index])
+                                Stepper(
+                                    "",
+                                    value: $holes[index].par,
+                                    in: parRange
+                                )
+                                .sensoryFeedback(
+                                    .increase,
+                                    trigger: holes[index].par
+                                )
+                            }
+                        }
+                    } header: {
+                        HStack {
+                            Text("Holes".uppercased())
+                            Spacer()
+                            Text(
+                                "Par \(allHoles.reduce(0) { $0 + $1.par })"
+                                    .uppercased()
+                            )
                         }
                     }
                 }
