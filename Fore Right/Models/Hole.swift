@@ -5,8 +5,17 @@ import SwiftData
 final class Hole {
     var number: Int
     var par: Int
+    var course: Course?
+    var icon: String {
+        "\(number).circle.fill"
+    }
+    var parIcon: String {
+        "\(par).square"
+    }
 
-    init(number: Int = 0, par: Int = 4) {
+    static let icon: String = "flag"
+
+    init(number: Int, par: Int = 4) {
         self.number = number
         self.par = par
     }

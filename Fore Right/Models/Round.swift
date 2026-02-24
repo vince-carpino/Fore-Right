@@ -7,9 +7,15 @@ final class Round {
     var course: Course?
     var numStrokesPerHole: [Int]
 
-    init(date: Date = .now, course: Course? = nil) {
+    static let icon: String = "figure.golf"
+
+    init(
+        date: Date = .now,
+        course: Course? = nil,
+        numStrokesPerHole: [Int] = []
+    ) {
         self.date = date
         self.course = course
-        self.numStrokesPerHole = []
+        self.numStrokesPerHole = numStrokesPerHole
     }
 }
