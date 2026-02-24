@@ -7,8 +7,6 @@ struct Fore_RightApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [
-            Round.self,
-        ])
+        .modelContainer(for: Round.self)
     }
 }

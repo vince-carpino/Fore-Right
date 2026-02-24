@@ -11,15 +11,16 @@ struct Previewer {
         do {
             container = try ModelContainer(for: schema, configurations: config)
         } catch {
-            fatalError("Failed to create Preview container: \(error.localizedDescription)")
+            fatalError(
+                "Failed to create Preview container: \(error.localizedDescription)"
+            )
         }
     }
 
+    @MainActor
     func addExamples(_ examples: [any PersistentModel]) {
-        Task { @MainActor in
-            examples.forEach { example in
-                container.mainContext.insert(example)
-            }
+        examples.forEach { example in
+            container.mainContext.insert(example)
         }
     }
 }
