@@ -3,7 +3,6 @@ import SwiftUI
 
 struct ListCoursesView: View {
     @Environment(\.modelContext) private var modelContext
-    @Binding var path: NavigationPath
 
     @Query(sort: \Course.name) var courses: [Course]
 
@@ -73,7 +72,7 @@ struct ListCoursesView: View {
     previewer.addExamples(Course.sampleCourses)
 
     return NavigationStack {
-        ListCoursesView(path: .constant(NavigationPath()))
+        ListCoursesView()
             .modelContainer(previewer.container)
     }
 }

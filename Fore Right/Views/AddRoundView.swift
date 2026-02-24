@@ -3,7 +3,6 @@ import SwiftUI
 
 struct AddRoundView: View {
     @Environment(\.modelContext) var modelContext
-    @Binding var path: NavigationPath
 
     @Query var courses: [Course]
     @State private var selectedCourse: Course?
@@ -57,12 +56,11 @@ struct AddRoundView: View {
 }
 
 #Preview {
-    do {
-        let previewer = try Previewer()
+    let previewer = Previewer(Round.self, Course.self, Hole.self)
+    previewer.addExamples(Course.sampleCourses)
 
-        return AddRoundView(path: .constant(NavigationPath()))
+    return NavigationStack {
+        AddRoundView()
             .modelContainer(previewer.container)
-    } catch {
-        return Text("Failed to create preview: \(error.localizedDescription)")
     }
 }

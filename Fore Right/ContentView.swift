@@ -2,20 +2,17 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @State private var roundsPath = NavigationPath()
-    @State private var coursesPath = NavigationPath()
-
     var body: some View {
         TabView {
             Tab("Rounds", systemImage: Round.icon) {
-                NavigationStack(path: $roundsPath) {
-                    ListRoundsView(path: $roundsPath)
+                NavigationStack {
+                    ListRoundsView()
                 }
             }
 
             Tab("Courses", systemImage: Course.icon) {
-                NavigationStack(path: $coursesPath) {
-                    ListCoursesView(path: $coursesPath)
+                NavigationStack {
+                    ListCoursesView()
                 }
             }
         }

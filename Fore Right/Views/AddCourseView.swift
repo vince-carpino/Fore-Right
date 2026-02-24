@@ -3,7 +3,6 @@ import SwiftUI
 
 struct AddCourseView: View {
     @Environment(\.modelContext) private var modelContext
-    @Binding var path: NavigationPath
 
     @State private var courseName: String = ""
     @State private var holes: [Hole] = []
@@ -91,7 +90,7 @@ struct AddCourseView: View {
     let previewer = Previewer()
 
     return NavigationStack {
-        AddCourseView(path: .constant(NavigationPath()))
+        AddCourseView()
             .modelContainer(previewer.container)
     }
 }

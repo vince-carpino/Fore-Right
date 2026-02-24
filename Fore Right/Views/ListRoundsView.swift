@@ -3,7 +3,6 @@ import SwiftUI
 
 struct ListRoundsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Binding var path: NavigationPath
 
     @Query(sort: [
         SortDescriptor(\Round.date, order: .reverse)
@@ -75,7 +74,7 @@ struct ListRoundsView: View {
     previewer.addExamples(Round.sampleRounds)
 
     return NavigationStack {
-        ListRoundsView(path: .constant(NavigationPath()))
+        ListRoundsView()
             .modelContainer(previewer.container)
     }
 }
