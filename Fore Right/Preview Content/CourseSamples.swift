@@ -10,9 +10,10 @@ extension Course {
             "Shorecliffs",
             "Lake Forest",
         ]
-        let courseLength = Bool.random() ? 18 : 9
 
         for courseName in sampleCourseNames {
+            let courseLength = Bool.random() ? 18 : 9
+
             courses.append(
                 Course(
                     name: courseName,
