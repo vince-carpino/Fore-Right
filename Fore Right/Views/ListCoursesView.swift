@@ -17,13 +17,14 @@ struct ListCoursesView: View {
                             .bold()
 
                         HStack {
-                            Text("\(course.holes.count) Holes".uppercased())
-                                .font(.caption)
+                            Text("\(course.holes.count) Holes")
+                                .textCase(.uppercase)
                             Divider()
-                            Text("Par \(course.par)".uppercased())
-                                .font(.caption)
+                            Text("Par \(course.par)")
+                                .textCase(.uppercase)
                         }
                         .bold()
+                        .font(.caption)
                     }
                 }
             }

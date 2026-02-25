@@ -23,12 +23,11 @@ struct ReadCourseView: View {
                     }
                 } header: {
                     HStack {
-                        Text("Front".uppercased())
+                        Text("Front")
+                            .textCase(.uppercase)
                         Spacer()
-                        Text(
-                            "Par \(frontPar)"
-                                .uppercased()
-                        )
+                        Text("Par \(frontPar)")
+                            .textCase(.uppercase)
                     }
                 }
 
@@ -38,12 +37,11 @@ struct ReadCourseView: View {
                     }
                 } header: {
                     HStack {
-                        Text("Back".uppercased())
+                        Text("Back")
+                            .textCase(.uppercase)
                         Spacer()
-                        Text(
-                            "Par \(backPar)"
-                                .uppercased()
-                        )
+                        Text("Par \(backPar)")
+                            .textCase(.uppercase)
                     }
                 }
             } else {
@@ -53,8 +51,11 @@ struct ReadCourseView: View {
                     }
                 } header: {
                     HStack {
+                        Text("Holes")
+                            .textCase(.uppercase)
                         Spacer()
-                        Text("Par \(course.par)".uppercased())
+                        Text("Par \(course.par)")
+                            .textCase(.uppercase)
                     }
                 }
             }

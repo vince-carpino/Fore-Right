@@ -2,16 +2,18 @@ import SwiftData
 import SwiftUI
 
 struct HoleView: View {
-    @Bindable var hole: Hole
+    var hole: Hole
 
     var body: some View {
         HStack {
-            Text("Hole".uppercased())
+            Text("Hole")
+                .textCase(.uppercase)
             Image(systemName: hole.icon)
 
             Spacer()
 
-            Text("Par".uppercased())
+            Text("Par")
+                .textCase(.uppercase)
             Image(systemName: hole.parIcon)
         }
         .font(.title3)

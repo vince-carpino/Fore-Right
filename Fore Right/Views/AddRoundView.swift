@@ -16,7 +16,9 @@ struct AddRoundView: View {
     @State private var datePlayed: Date = .now
 
     private var totalStrokes: Int { strokesPerHole.reduce(0, +) }
-    private var isReady: Bool { selectedCourse != nil && !strokesPerHole.isEmpty }
+    private var isReady: Bool {
+        selectedCourse != nil && !strokesPerHole.isEmpty
+    }
 
     var body: some View {
         Form {
@@ -52,10 +54,12 @@ struct AddRoundView: View {
                 }
             } header: {
                 HStack {
-                    Text("Round".uppercased())
+                    Text("Round")
+                        .textCase(.uppercase)
                     Spacer()
                     if isReady {
-                        Text("\(totalStrokes) Strokes".uppercased())
+                        Text("\(totalStrokes) Strokes")
+                            .textCase(.uppercase)
                     }
                 }
             }
@@ -69,45 +73,63 @@ struct AddRoundView: View {
             }
 
             if let selectedCourse,
-               strokesPerHole.count == selectedCourse.holes.count
+                strokesPerHole.count == selectedCourse.holes.count
             {
                 if selectedCourse.holes.count == 18 {
                     let frontHoles = Array(selectedCourse.sortedHoles.prefix(9))
-                    let backHoles = Array(selectedCourse.sortedHoles.dropFirst(9))
+                    let backHoles = Array(
+                        selectedCourse.sortedHoles.dropFirst(9)
+                    )
 
                     Section {
                         ForEach(frontHoles.indices, id: \.self) { index in
-                            HoleInputRow(hole: frontHoles[index], strokes: $strokesPerHole[index])
+                            HoleInputRow(
+                                hole: frontHoles[index],
+                                strokes: $strokesPerHole[index]
+                            )
                         }
                     } header: {
                         HStack {
-                            Text("Front".uppercased())
+                            Text("Front")
+                                .textCase(.uppercase)
                             Spacer()
-                            Text("Par \(frontHoles.reduce(0) { $0 + $1.par })".uppercased())
+                            Text("Par \(frontHoles.reduce(0) { $0 + $1.par })")
+                                .textCase(.uppercase)
                         }
                     }
 
                     Section {
                         ForEach(backHoles.indices, id: \.self) { index in
-                            HoleInputRow(hole: backHoles[index], strokes: $strokesPerHole[index + 9])
+                            HoleInputRow(
+                                hole: backHoles[index],
+                                strokes: $strokesPerHole[index + 9]
+                            )
                         }
                     } header: {
                         HStack {
-                            Text("Back".uppercased())
+                            Text("Back")
+                                .textCase(.uppercase)
                             Spacer()
-                            Text("Par \(backHoles.reduce(0) { $0 + $1.par })".uppercased())
+                            Text("Par \(backHoles.reduce(0) { $0 + $1.par })")
+                                .textCase(.uppercase)
                         }
                     }
                 } else {
                     Section {
-                        ForEach(selectedCourse.sortedHoles.indices, id: \.self) { index in
-                            HoleInputRow(hole: selectedCourse.sortedHoles[index], strokes: $strokesPerHole[index])
+                        ForEach(selectedCourse.sortedHoles.indices, id: \.self)
+                        { index in
+                            HoleInputRow(
+                                hole: selectedCourse.sortedHoles[index],
+                                strokes: $strokesPerHole[index]
+                            )
                         }
                     } header: {
                         HStack {
-                            Text("Holes".uppercased())
+                            Text("Holes")
+                                .textCase(.uppercase)
                             Spacer()
-                            Text("Par \(selectedCourse.par)".uppercased())
+                            Text("Par \(selectedCourse.par)")
+                                .textCase(.uppercase)
                         }
                     }
                 }
@@ -124,7 +146,11 @@ struct AddRoundView: View {
     }
 
     func saveRound() {
-        let round = Round(date: datePlayed, course: selectedCourse, numStrokesPerHole: strokesPerHole)
+        let round = Round(
+            date: datePlayed,
+            course: selectedCourse,
+            numStrokesPerHole: strokesPerHole
+        )
         modelContext.insert(round)
         dismiss()
     }

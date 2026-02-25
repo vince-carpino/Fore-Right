@@ -18,7 +18,9 @@ struct ListRoundsView: View {
 
                         if let courseName = round.course?.name {
                             Text(courseName)
-                            Text("on \(round.date.formatted(date: .long, time: .omitted))")
+                            Text(
+                                "on \(round.date.formatted(date: .long, time: .omitted))"
+                            )
                         }
                     }
                 } label: {
@@ -38,8 +40,8 @@ struct ListRoundsView: View {
                                     date: .abbreviated,
                                     time: .omitted
                                 )
-                                .uppercased()
                             )
+                            .textCase(.uppercase)
                         }
                         .font(.caption)
                         .bold()

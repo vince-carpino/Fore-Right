@@ -22,123 +22,119 @@ struct AddCourseView: View {
     }
 
     var body: some View {
-        VStack {
-            Form {
-                Section {
-                    TextField("Course Name", text: $courseName)
-                        .textInputAutocapitalization(.words)
+        Form {
+            Section {
+                TextField("Course Name", text: $courseName)
+                    .textInputAutocapitalization(.words)
 
-                    HStack {
-                        Picker("Holes", selection: $numHoles) {
-                            ForEach(numHolesOptions, id: \.self) {
-                                Text("\($0) holes".uppercased())
-                            }
+                HStack {
+                    Picker("Holes", selection: $numHoles) {
+                        ForEach(numHolesOptions, id: \.self) {
+                            Text("\($0) holes")
+                                .textCase(.uppercase)
                         }
-                        .pickerStyle(.segmented)
+                    }
+                    .pickerStyle(.segmented)
+                }
+            } header: {
+                HStack {
+                    Text("Course")
+                        .textCase(.uppercase)
+                    Spacer()
+                    Text("Par \(par)")
+                        .textCase(.uppercase)
+                }
+            }
+
+            if numHoles == 18 {
+                let splitIndex = min(9, holes.count)
+                let frontHoles = holes.prefix(splitIndex)
+                let backHoles = holes.dropFirst(splitIndex)
+
+                Section {
+                    ForEach(frontHoles.indices, id: \.self) { index in
+                        HStack {
+                            HoleView(hole: holes[index])
+                            Stepper(
+                                "",
+                                value: $holes[index].par,
+                                in: parRange
+                            )
+                            .sensoryFeedback(
+                                .increase,
+                                trigger: holes[index].par
+                            )
+                        }
                     }
                 } header: {
                     HStack {
-                        Text("Course".uppercased())
+                        Text("Front")
+                            .textCase(.uppercase)
                         Spacer()
-                        Text("Par \(par)".uppercased())
+                        Text("Par \(frontHoles.reduce(0) { $0 + $1.par })")
+                            .textCase(.uppercase)
                     }
                 }
 
-                if numHoles == 18 {
-                    let frontCount = min(9, holes.count)
-                    let backStart = min(9, holes.count)
-
-                    let frontHoles = holes.prefix(frontCount)
-                    let backHoles = holes.dropFirst(backStart)
-
-                    Section {
-                        ForEach(frontHoles.indices, id: \.self) { index in
-                            HStack {
-                                HoleView(hole: holes[index])
-                                Stepper(
-                                    "",
-                                    value: $holes[index].par,
-                                    in: parRange
-                                )
-                                .sensoryFeedback(
-                                    .increase,
-                                    trigger: holes[index].par
-                                )
-                            }
-                        }
-                    } header: {
+                Section {
+                    ForEach(backHoles.indices, id: \.self) { index in
                         HStack {
-                            Text("Front".uppercased())
-                            Spacer()
-                            Text(
-                                "Par \(frontHoles.reduce(0) { $0 + $1.par })"
-                                    .uppercased()
+                            HoleView(hole: holes[index])
+                            Stepper(
+                                "",
+                                value: $holes[index].par,
+                                in: parRange
+                            )
+                            .sensoryFeedback(
+                                .increase,
+                                trigger: holes[index].par
                             )
                         }
                     }
-
-                    Section {
-                        ForEach(backHoles.indices, id: \.self) { index in
-                            HStack {
-                                HoleView(hole: holes[index])
-                                Stepper(
-                                    "",
-                                    value: $holes[index].par,
-                                    in: parRange
-                                )
-                                .sensoryFeedback(
-                                    .increase,
-                                    trigger: holes[index].par
-                                )
-                            }
-                        }
-                    } header: {
-                        HStack {
-                            Text("Back".uppercased())
-                            Spacer()
-                            Text(
-                                "Par \(backHoles.reduce(0) { $0 + $1.par })"
-                                    .uppercased()
-                            )
-                        }
-                    }
-                } else {
-                    let holesCount = min(9, holes.count)
-                    let allHoles = holes.prefix(holesCount)
-
-                    Section {
-                        ForEach(allHoles.indices, id: \.self) { index in
-                            HStack {
-                                HoleView(hole: holes[index])
-                                Stepper(
-                                    "",
-                                    value: $holes[index].par,
-                                    in: parRange
-                                )
-                                .sensoryFeedback(
-                                    .increase,
-                                    trigger: holes[index].par
-                                )
-                            }
-                        }
-                    } header: {
-                        HStack {
-                            Text("Holes".uppercased())
-                            Spacer()
-                            Text(
-                                "Par \(allHoles.reduce(0) { $0 + $1.par })"
-                                    .uppercased()
-                            )
-                        }
+                } header: {
+                    HStack {
+                        Text("Back")
+                            .textCase(.uppercase)
+                        Spacer()
+                        Text("Par \(backHoles.reduce(0) { $0 + $1.par })")
+                            .textCase(.uppercase)
                     }
                 }
+            } else {
+                let holesCount = min(9, holes.count)
+                let allHoles = holes.prefix(holesCount)
 
-                Button(action: saveCourse) {
-                    Label("Save", systemImage: "checkmark.circle.fill")
+                Section {
+                    ForEach(allHoles.indices, id: \.self) { index in
+                        HStack {
+                            HoleView(hole: holes[index])
+                            Stepper(
+                                "",
+                                value: $holes[index].par,
+                                in: parRange
+                            )
+                            .sensoryFeedback(
+                                .increase,
+                                trigger: holes[index].par
+                            )
+                        }
+                    }
+                } header: {
+                    HStack {
+                        Text("Holes")
+                            .textCase(.uppercase)
+                        Spacer()
+                        Text("Par \(allHoles.reduce(0) { $0 + $1.par })")
+                            .textCase(.uppercase)
+                    }
                 }
-                .foregroundStyle(courseNameIsEmpty() ? .gray : .accent)
-                .disabled(courseNameIsEmpty())
             }
+
+            Button(action: saveCourse) {
+                Label("Save", systemImage: "checkmark.circle.fill")
+            }
+            .foregroundStyle(courseNameIsEmpty() ? .gray : .accent)
+            .disabled(courseNameIsEmpty())
         }
         .onAppear {
             generateHoles()

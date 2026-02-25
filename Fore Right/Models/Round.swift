@@ -8,12 +8,12 @@ final class Round {
     var numStrokesPerHole: [Int]
 
     var totalStrokes: Int { numStrokesPerHole.reduce(0, +) }
-    var scoreRelativeToPar: Int {
-        guard let par = course?.par else { return 0 }
+    var scoreRelativeToPar: Int? {
+        guard let par = course?.par else { return nil }
         return totalStrokes - par
     }
     var scoreRelativeToParFormatted: String {
-        let score = scoreRelativeToPar
+        guard let score = scoreRelativeToPar else { return "?" }
         switch score {
         case 0: return "E"
         case 1...: return "+\(score)"

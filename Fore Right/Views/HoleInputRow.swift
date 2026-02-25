@@ -26,10 +26,12 @@ struct HoleInputRow: View {
 
     var body: some View {
         HStack {
-            Text("Hole".uppercased())
+            Text("Hole")
+                .textCase(.uppercase)
             Image(systemName: hole.icon)
 
-            Text("Par".uppercased())
+            Text("Par")
+                .textCase(.uppercase)
             Image(systemName: hole.parIcon)
 
             Spacer()
