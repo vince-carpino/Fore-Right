@@ -10,7 +10,7 @@ final class Hole {
         "\(number).circle.fill"
     }
     var parIcon: String {
-        "\(par).square"
+        "\(par).circle"
     }
 
     static let icon: String = "flag"
