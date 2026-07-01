@@ -13,15 +13,7 @@ struct ListRoundsView: View {
             ForEach(rounds) { round in
                 NavigationLink {
                     VStack {
-                        Text("Read Round View")
-                            .font(.headline)
-
-                        if let courseName = round.course?.name {
-                            Text(courseName)
-                            Text(
-                                "on \(round.date.formatted(date: .long, time: .omitted))"
-                            )
-                        }
+                        ReadRoundView(round: round)
                     }
                 } label: {
                     VStack(alignment: .leading) {
