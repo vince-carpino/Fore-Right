@@ -10,7 +10,7 @@ struct AddCourseView: View {
     @State private var numHoles: Int = 18
 
     private var numHolesOptions: [Int] = [9, 18]
-    private var parRange = 3...7
+    private var parRange = 3...5
     private var par: Int {
         holes.reduce(0) { $0 + $1.par }
     }
