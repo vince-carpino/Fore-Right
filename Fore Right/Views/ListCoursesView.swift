@@ -35,6 +35,7 @@ struct ListCoursesView: View {
             }
 
         }
+        .id(courses.isEmpty)
         .overlay {
             if courses.isEmpty {
                 NoListItemsView(

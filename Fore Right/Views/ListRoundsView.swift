@@ -46,6 +46,7 @@ struct ListRoundsView: View {
                 }
             }
         }
+        .id(rounds.isEmpty)
         .overlay {
             if rounds.isEmpty {
                 NoListItemsView(
