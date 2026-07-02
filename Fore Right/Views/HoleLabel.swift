@@ -27,8 +27,8 @@ struct ParLabel: View {
                 .textCase(.uppercase)
             Image(systemName: hole.parIcon)
                 .contentTransition(.symbolEffect(.replace))
+                .foregroundStyle(parColor)
         }
-        .foregroundStyle(parColor)
         .animation(.easeInOut(duration: 0.15), value: hole.par)
     }
 }
