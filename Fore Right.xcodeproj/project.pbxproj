@@ -29,9 +29,22 @@
 		D02FCC142F3BCBAA009AD249 /* Fore RightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fore RightUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D0B165BF2FF6336F00A096BE /* Exceptions for "Fore Right" folder in "Fore Right" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Fore-Right-Info.plist",
+			);
+			target = D02FCBFA2F3BCBA8009AD249 /* Fore Right */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D02FCBFD2F3BCBA8009AD249 /* Fore Right */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D0B165BF2FF6336F00A096BE /* Exceptions for "Fore Right" folder in "Fore Right" target */,
+			);
 			path = "Fore Right";
 			sourceTree = "<group>";
 		};
@@ -402,7 +415,9 @@
 				DEVELOPMENT_TEAM = UZ338LKNSU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Fore-Right-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Fore Right!";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -441,7 +456,9 @@
 				DEVELOPMENT_TEAM = UZ338LKNSU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Fore-Right-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Fore Right!";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
