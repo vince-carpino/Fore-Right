@@ -19,7 +19,7 @@ struct ReadCourseView: View {
             if course.length == 18 {
                 Section {
                     ForEach(frontHoles) { hole in
-                        HoleView(hole: hole)
+                        CourseHoleRow(hole: hole)
                     }
                 } header: {
                     HStack {
@@ -33,7 +33,7 @@ struct ReadCourseView: View {
 
                 Section {
                     ForEach(backHoles) { hole in
-                        HoleView(hole: hole)
+                        CourseHoleRow(hole: hole)
                     }
                 } header: {
                     HStack {
@@ -47,7 +47,7 @@ struct ReadCourseView: View {
             } else {
                 Section {
                     ForEach(course.sortedHoles) { hole in
-                        HoleView(hole: hole)
+                        CourseHoleRow(hole: hole)
                     }
                 } header: {
                     HStack {

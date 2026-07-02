@@ -1,24 +1,17 @@
 import SwiftData
 import SwiftUI
 
-struct HoleView: View {
+struct CourseHoleRow: View {
     var hole: Hole
 
     var body: some View {
         HStack {
-            Text("Hole")
-                .textCase(.uppercase)
-            Image(systemName: hole.icon)
-
+            HoleLabel(hole: hole)
             Spacer()
-
-            Text("Par")
-                .textCase(.uppercase)
-            Image(systemName: hole.parIcon)
+            ParLabel(hole: hole)
         }
         .font(.title3)
         .lineLimit(1)
-        .minimumScaleFactor(0.01)
         .bold()
     }
 }
@@ -33,7 +26,7 @@ struct HoleView: View {
     previewer.addExamples(courses)
 
     return NavigationStack {
-        HoleView(hole: courses[0].holes[0])
+        CourseHoleRow(hole: courses[0].holes[0])
             .modelContainer(previewer.container)
     }
 }

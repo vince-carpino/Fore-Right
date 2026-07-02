@@ -1,10 +1,9 @@
 import SwiftData
 import SwiftUI
 
-struct HoleInputRow: View {
+struct RoundHoleRow: View {
     var hole: Hole
-    @Binding var strokes: Int
-    @State private var countsDown = false
+    var strokes: Int
 
     private var isUnderPar: Bool {
         strokes < hole.par
@@ -50,34 +49,14 @@ struct HoleInputRow: View {
                 .foregroundStyle(.yellow)
                 .opacity(isUnderPar ? 1 : 0)
                 .scaleEffect(isUnderPar ? 1 : 0.5)
-                .transition(.scale.combined(with: .opacity))
-                .animation(.spring(response: 0.4), value: isUnderPar)
-                .id(currentSymbolName)
 
             Text(relativeLabel)
                 .foregroundStyle(relativeColor)
                 .monospacedDigit()
-                .contentTransition(.numericText(countsDown: countsDown))
-                .animation(.default, value: strokes)
                 .padding(.trailing)
 
-            Stepper(
-                "",
-                value: Binding(
-                    get: { strokes },
-                    set: { newValue in
-                        countsDown = newValue < strokes
-
-                        withAnimation(.spring) {
-                            strokes = newValue
-                        }
-
-                    }
-                ),
-                in: 1...9
-            )
-            .labelsHidden()
-            .sensoryFeedback(.increase, trigger: strokes)
+//            Text("\(strokes)")
+//                .frame(minWidth: 24)
         }
         .bold()
         .font(.title3)
@@ -85,12 +64,11 @@ struct HoleInputRow: View {
 }
 
 #Preview {
-    @Previewable @State var strokes = 4
     let previewer = Previewer(Round.self, Course.self, Hole.self)
     let hole = Hole(number: 3, par: 4)
     previewer.addExamples([hole])
 
-    return HoleInputRow(hole: hole, strokes: $strokes)
+    return RoundHoleRow(hole: hole, strokes: 3)
         .modelContainer(previewer.container)
         .padding()
 }

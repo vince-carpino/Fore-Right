@@ -54,7 +54,7 @@ struct AddCourseView: View {
                 Section {
                     ForEach(frontHoles.indices, id: \.self) { index in
                         HStack {
-                            HoleView(hole: holes[index])
+                            CourseHoleRow(hole: holes[index])
                             Stepper(
                                 "",
                                 value: $holes[index].par,
@@ -79,7 +79,7 @@ struct AddCourseView: View {
                 Section {
                     ForEach(backHoles.indices, id: \.self) { index in
                         HStack {
-                            HoleView(hole: holes[index])
+                            CourseHoleRow(hole: holes[index])
                             Stepper(
                                 "",
                                 value: $holes[index].par,
@@ -107,7 +107,7 @@ struct AddCourseView: View {
                 Section {
                     ForEach(allHoles.indices, id: \.self) { index in
                         HStack {
-                            HoleView(hole: holes[index])
+                            CourseHoleRow(hole: holes[index])
                             Stepper(
                                 "",
                                 value: $holes[index].par,
