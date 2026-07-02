@@ -26,17 +26,18 @@ struct ReadRoundView: View {
 
     var body: some View {
         Form {
-            Section {
-                LabeledContent("Course", value: course?.name ?? "Unknown")
-                LabeledContent("Date Played", value: round.date.formatted(date: .abbreviated, time: .omitted))
-            } header: {
-                HStack {
-                    Text("Round")
+            if let course, strokesPerHole.count == course.holes.count {
+                if course.holes.count == 18 {
+                    Section {
+                    } header: {
+                        HStack {
+                            Text(round.date.formatted(date: .abbreviated, time: .omitted))
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Text("Par \(totalPar) · \(totalStrokes) (\(relativeLabel))")
+                        }
                         .textCase(.uppercase)
-                    Spacer()
-                    Text("\(totalStrokes) Strokes (\(relativeLabel))")
-                        .textCase(.uppercase)
-                        .foregroundStyle(relativeColor)
+                    }
                 }
             }
 
@@ -86,7 +87,7 @@ struct ReadRoundView: View {
                         }
                     } header: {
                         splitHeader(
-                            title: "Holes",
+                            title: round.date.formatted(date: .abbreviated, time: .omitted),
                             par: course.par,
                             strokes: totalStrokes
                         )
