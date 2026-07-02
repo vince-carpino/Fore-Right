@@ -55,15 +55,13 @@ struct AddCourseView: View {
                     ForEach(frontHoles.indices, id: \.self) { index in
                         HStack {
                             CourseHoleRow(hole: holes[index])
+                            Spacer()
                             Stepper(
                                 "",
                                 value: $holes[index].par,
                                 in: parRange
                             )
-                            .sensoryFeedback(
-                                .increase,
-                                trigger: holes[index].par
-                            )
+                            .sensoryFeedback(.increase, trigger: holes[index].par)
                         }
                     }
                 } header: {
@@ -80,15 +78,13 @@ struct AddCourseView: View {
                     ForEach(backHoles.indices, id: \.self) { index in
                         HStack {
                             CourseHoleRow(hole: holes[index])
+                            Spacer()
                             Stepper(
                                 "",
                                 value: $holes[index].par,
                                 in: parRange
                             )
-                            .sensoryFeedback(
-                                .increase,
-                                trigger: holes[index].par
-                            )
+                            .sensoryFeedback(.increase, trigger: holes[index].par)
                         }
                     }
                 } header: {
@@ -108,15 +104,13 @@ struct AddCourseView: View {
                     ForEach(allHoles.indices, id: \.self) { index in
                         HStack {
                             CourseHoleRow(hole: holes[index])
+                            Spacer()
                             Stepper(
                                 "",
                                 value: $holes[index].par,
                                 in: parRange
                             )
-                            .sensoryFeedback(
-                                .increase,
-                                trigger: holes[index].par
-                            )
+                            .sensoryFeedback(.increase, trigger: holes[index].par)
                         }
                     }
                 } header: {
