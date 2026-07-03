@@ -21,6 +21,9 @@ struct AddCourseView: View {
         }
     }
 
+    @State private var showSaveError: Bool = false
+    @State private var saveErrorMessage: String = ""
+
     var body: some View {
         Form {
             Section {
@@ -138,6 +141,11 @@ struct AddCourseView: View {
         }
         .navigationTitle("New Course")
         .navigationBarTitleDisplayMode(.inline)
+        .alert("Save Failed", isPresented: $showSaveError) {
+            Button("OK") {}
+        } message: {
+            Text(saveErrorMessage)
+        }
     }
 
     func courseNameIsEmpty() -> Bool {
@@ -147,7 +155,16 @@ struct AddCourseView: View {
     func saveCourse() {
         let course = Course(name: courseName, holes: holes)
         modelContext.insert(course)
-        dismiss()
+
+        do {
+            try modelContext.save()
+            dismiss()
+        } catch {
+            print("saveCourse failed: \(error)")
+            modelContext.delete(course)
+            saveErrorMessage = "Couldn't save the course. Please try again."
+            showSaveError = true
+        }
     }
 }
 

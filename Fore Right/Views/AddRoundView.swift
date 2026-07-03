@@ -20,6 +20,9 @@ struct AddRoundView: View {
         selectedCourse != nil && !strokesPerHole.isEmpty
     }
 
+    @State private var showSaveError: Bool = false
+    @State private var saveErrorMessage: String = ""
+
     var body: some View {
         Form {
             Section {
@@ -143,6 +146,11 @@ struct AddRoundView: View {
         }
         .navigationTitle("New Round")
         .navigationBarTitleDisplayMode(.inline)
+        .alert("Save Failed", isPresented: $showSaveError) {
+            Button("OK") {}
+        } message: {
+            Text(saveErrorMessage)
+        }
     }
 
     func saveRound() {
@@ -152,7 +160,16 @@ struct AddRoundView: View {
             numStrokesPerHole: strokesPerHole
         )
         modelContext.insert(round)
-        dismiss()
+
+        do {
+            try modelContext.save()
+            dismiss()
+        } catch {
+            print("saveRound failed: \(error)")
+            modelContext.delete(round)
+            saveErrorMessage = "Couldn't save the round. Please try again."
+            showSaveError = true
+        }
     }
 }
 
